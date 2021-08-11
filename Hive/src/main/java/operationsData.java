@@ -2,6 +2,7 @@ import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 
 /**
  * @author zz
@@ -12,7 +13,11 @@ public class operationsData  extends GenericUDF {
 
     @Override
     public ObjectInspector initialize(ObjectInspector[] objectInspectors) throws UDFArgumentException {
-        return null;
+
+        if (objectInspectors.length != 1) {
+            throw new UDFArgumentException("参数个数不为1");
+        }
+        return PrimitiveObjectInspectorFactory.writableIntObjectInspector;
     }
 
     @Override
